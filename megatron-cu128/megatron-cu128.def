@@ -8,12 +8,6 @@ From: nvcr.io/nvidia/pytorch:25.02-py3
     export LC_ALL=en_US.UTF-8
     export PYTHONUNBUFFERED=1
     export PYTHONNOUSERSITE=1
-    
-    # ---- Dynamic Repository Resolution ----
-    # Automatically hooks your custom Megatron-LM path into Python if available at runtime
-    if [ -d "/home/nemowon/repos/Megatron-LM" ]; then
-        export PYTHONPATH="/home/nemowon/repos/Megatron-LM:$PYTHONPATH"
-    fi
 
 %post
     # ---- 1. Install Minimal OS Utilities ----
