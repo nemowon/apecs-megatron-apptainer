@@ -1,0 +1,25 @@
+Bootstrap: docker
+# Use NVIDIA's official production-ready stack (includes CUDA 12.8.0, PyTorch, TE, and Flash-Attention)
+From: nvcr.io/nvidia/pytorch:25.02-py3
+
+%environment
+    export PYTHONUNBUFFERED=1
+    export PYTHONNOUSERSITE=1
+    # ---- Triton Fix: Inject the patched folder into dynamic linker priority list ----
+    export TRITON_LIBCUDA_PATH="/opt/nvidia/compat_patch"
+
+%post
+    apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends build-essential ninja-build
+    
+    pip install --no-build-isolation "megatron-core==0.11.*"
+
+    # ---- Triton Driver Path Patch (RELATIVE LINK FOR HPC) ----
+    mkdir -p /opt/nvidia/compat_patch && cd /opt/nvidia/compat_patch
+    ln -sf /usr/local/cuda/compat/lib/libcuda.so.1 ./libcuda.so.1
+    ln -sf libcuda.so.1 ./libcuda.so
+
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+
+%test
+    python -c "import torch; print('NGC PyTorch version:', torch.__version__)"
