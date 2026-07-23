@@ -1,0 +1,6 @@
+# Apptainer / Singularity definition files
+*.def
+
+# PBS Job Output & Error Logs
+*.o[0-9]*
+*.e[0-9]*
