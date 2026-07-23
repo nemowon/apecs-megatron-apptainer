@@ -1,5 +1,5 @@
-# Apptainer / Singularity definition files
-*.def
+# Apptainer / Singularity built image files
+*.sif
 
 # PBS Job Output & Error Logs
 *.o[0-9]*
