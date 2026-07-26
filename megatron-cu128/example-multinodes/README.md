@@ -6,7 +6,13 @@
 
 - run with qsub
 1. update value indicated in `submit-multinode.pbs`
-1. run `qsub submit-multinode.pbs` where you will get a job id back
-    - `qstat -u <userid>` to get the job status
-    - `tail -f megatron_multinode.o<jobid>` to track log, because `#PBS -j oe` will join std/err log and write to this file
-    - `qdel <jobid>` to cancel the job
+1. run commands where you will get a job id back
+    ```shell
+    qsub submit-multinode.pbs \
+    -v MULTINODE_SH=<sh-to-run> # optional \
+    -v CONTAINER=<path-to-container> 
+    ```
+    - Job management
+        - `qstat -u <userid>` to get the job status
+        - `tail -f megatron_multinode.o<jobid>` to track log, because `#PBS -j oe` will join std/err log and write to this file
+        - `qdel <jobid>` to cancel the job
