@@ -70,10 +70,12 @@
 ### Test NCCL Running
 1. define apptainer env
     ```shell
+    # replace <path-to-nccl> below
     export APPTAINERENV_LD_LIBRARY_PATH="<path-to-nccl>/build/lib:$LD_LIBRARY_PATH"
     export APPTAINERENV_NCCL_DEBUG=INFO
     ```
 1. In target container, follow [nccl-tests](https://github.com/nvidia/nccl-tests) to run test
+1. when running any commands, confirm you are using targeting nccl with ldd, e.g. in <path-to-nccl-tests> `ldd ./build/all_reduce_perf | grep libnccl`
 
 ## Notes
 
