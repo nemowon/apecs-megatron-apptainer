@@ -25,7 +25,7 @@ else
 fi
 MASTER_PORT=29500
 
-CONTAINER_IMAGE="$HOME/container/megatron-cu128.sif"
+CONTAINER="${CONTAINER:-$HOME/container/megatron-cu128.sif}"
 WORKSPACE_DIR="$HOME/workspace"
 
 echo "=================================================="
@@ -48,7 +48,7 @@ export APPTAINERENV_PYTHONPATH="/workspace/Megatron-LM:$PYTHONPATH"
 mpiexec -n ${NUM_NODES} --ppn 1 \
   apptainer exec --nv \
     --bind "${WORKSPACE_DIR}:/workspace" \
-    "${CONTAINER_IMAGE}" \
+    "${CONTAINER}" \
     sh -c "torchrun \
       --nproc_per_node=${GPUS_PER_NODE} \
       --nnodes=${NUM_NODES} \
